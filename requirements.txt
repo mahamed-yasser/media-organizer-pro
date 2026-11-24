@@ -5,7 +5,7 @@ numpy>=1.21.0
 
 # Multimedia processing
 # ffmpeg-python  # Uncomment if you want Python bindings for FFmpeg
-# Pillow>=9.0.0  # For image processing
+Pillow>=9.0.0  # For image processing
 
 # Configuration
 pyyaml>=6.0

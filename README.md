@@ -8,9 +8,9 @@
 ![GitHub Stars](https://img.shields.io/github/stars/mahamedwow1-afk/media-organizer-pro?style=for-the-badge)
 ![GitHub Forks](https://img.shields.io/github/forks/mahamedwow1-afk/media-organizer-pro?style=for-the-badge)
 
-**Intelligent media file organization tool built with Python.**
+**Command-line tool that sorts media files into Type/Year/Month folders.**
 
-Automatically organizes your video, image, and audio files into structured folders using metadata analysis and machine learning.
+Automatically organizes your video, image, and audio files into structured folders by file type and modified date, reading metadata with FFmpeg and Pillow. There is no machine learning in it yet.
 
 [🚀 Demo](#-demo) • [📖 Installation](#-installation) • [⚙️ Configuration](#-configuration) • [🤝 Contributing](#-contributing)
 
@@ -24,12 +24,11 @@ Automatically organizes your video, image, and audio files into structured folde
 |---------|-------------|
 | 🎬 **Video Analysis** | Extract metadata (resolution, duration, codec, FPS) using FFmpeg |
 | 🎵 **Audio Processing** | Analyze bitrate, sample rate, channels, and quality |
-| 🖼️ **Image Classification** | Detect resolution, megapixels, and animated GIFs |
-| 🤖 **ML Classification** | Optional machine learning for content-aware organization |
+| 🖼️ **Image Analysis** | Detect resolution, megapixels, and animated GIFs (needs Pillow) |
 | ⚙️ **Configurable** | YAML-based configuration for custom workflows |
 | 🔍 **Dry-Run Mode** | Preview changes before applying them |
 | 📊 **Statistics** | Detailed reporting of organization results |
-| 🔄 **Recursive Search** | Organize entire directory trees |
+| 🔄 **Recursive Search** | Organize entire directory trees (always on for now, no switch to turn it off) |
 
 ---
 
@@ -54,7 +53,7 @@ Tests: `python -m pytest tests` (23 tests, including end-to-end runs of `main.py
 
 - Python 3.9 or higher
 - FFmpeg (for video/audio processing)
-- [Optional] TensorFlow (for ML classification)
+- Pillow (images), PyYAML (config). TensorFlow is not needed: the ML classifier is a placeholder
 
 ### Quick Install
 
@@ -169,7 +168,7 @@ media-organizer-pro/
 │   ├── video_processor.py   # Video metadata extraction
 │   ├── audio_processor.py   # Audio metadata extraction
 │   ├── image_processor.py   # Image analysis
-│   ├── classifier.py        # ML-based classification
+│   ├── classifier.py        # Placeholder classifier (no real ML)
 │   ├── config.py            # Configuration management
 │   └── logger.py            # Logging setup
 ├── tests/
