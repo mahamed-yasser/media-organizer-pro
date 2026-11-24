@@ -1,4 +1,4 @@
-"""Configuration file for Media Organizer Pro."""
+# Configuration file for Media Organizer Pro.
 
 source_dir: "./input"
 target_dir: "./output"
@@ -15,7 +15,7 @@ max_file_size_mb: 10240
 # ML Classification (requires tensorflow)
 use_ml_classification: false
 
-# ML Model path (for future implementation)
+# ML Model path (not used: ML is a placeholder)
 # model_path: "./models/classifier.h5"
 
 # Video extensions to process
@@ -56,7 +56,8 @@ document_extensions:
   - ".xls"
   - ".xlsx"
 
-# Output folder naming format
+# Output folder layout. {type} = Video/Image/Audio/Document; {%Y} {%m} {%B} {%b} {%d} = date parts.
+# Examples: "{type}/{%Y}/{%B}" (default), "{%Y}/{%m}/{type}", "{type}". Anything else is rejected.
 folder_format: "{type}/{%Y}/{%B}"
 
 # Whether to skip existing files in target

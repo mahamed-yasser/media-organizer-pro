@@ -1,6 +1,6 @@
 # Media Organizer Pro - Dependencies
 # Core dependencies
-python>=3.9
+# Requires Python 3.9 or newer (not a pip package)
 numpy>=1.21.0
 
 # Multimedia processing
