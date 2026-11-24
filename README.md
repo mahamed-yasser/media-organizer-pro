@@ -36,7 +36,7 @@ Automatically organizes your video, image, and audio files into structured folde
 
 ![Real run on a sample folder](docs/screenshot.png)
 
-_Captured output of a real run on a small sample folder (3 images, 1 video, 1 audio file). Files were moved into `Type/Year/Month` folders._
+_Image: text output of a real run on a small sample folder (3 images, 1 video, 1 audio file), redrawn as a picture. It is not a window screenshot. The files were moved into `Type/Year/Month` folders._
 
 Preview first with `--dry-run`: it lists where each file would go and moves nothing.
 
