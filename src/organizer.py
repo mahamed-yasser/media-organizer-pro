@@ -6,6 +6,11 @@ Organizes video, image, and audio files intelligently using FFmpeg and ML.
 from pathlib import Path
 from datetime import datetime
 from enum import Enum
+
+try:
+    from tools import photo_date
+except ImportError:  # imported as a package
+    from .tools import photo_date
 import logging
 
 class FileType(Enum):
@@ -35,8 +40,13 @@ class MediaOrganizer:
                 return ftype
         return FileType.UNKNOWN
 
-    def generate_folder_name(self, file_path: Path, ftype: FileType) -> str:
-        """Generate meaningful folder name for the file."""
-        date = file_path.stat().st_mtime
-        dt = datetime.fromtimestamp(date)
-        return f"{ftype.value.title()}/{dt.strftime('%Y')}/{dt.strftime('%B')}"
+    def generate_folder_name(self, file_path: Path, ftype: FileType, fmt: str | None = None) -> str:
+        """Folder for the file, from folder_format (default {type}/{%Y}/{%B}). Raises ValueError if unsupported."""
+        from config import DEFAULT_FOLDER_FORMAT, validate_folder_format
+        fmt = validate_folder_format(fmt or getattr(self.config, "folder_format", None) or DEFAULT_FOLDER_FORMAT)
+        if ftype == FileType.IMAGE:
+            dt = photo_date(file_path)  # EXIF date taken, else modified time
+        else:
+            dt = datetime.fromtimestamp(file_path.stat().st_mtime)
+        name = fmt.replace("{type}", ftype.value.title())
+        return dt.strftime(name.replace("{", "").replace("}", ""))
