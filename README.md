@@ -5,8 +5,8 @@
 ![Python Version](https://img.shields.io/badge/Python-3.9%2B-blue?style=for-the-badge&logo=python)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-Active-success?style=for-the-badge)
-![GitHub Stars](https://img.shields.io/github/stars/mahamedwow1-afk/media-organizer-pro?style=for-the-badge)
-![GitHub Forks](https://img.shields.io/github/forks/mahamedwow1-afk/media-organizer-pro?style=for-the-badge)
+![GitHub Stars](https://img.shields.io/github/stars/mahamed-yasser/media-organizer-pro?style=for-the-badge)
+![GitHub Forks](https://img.shields.io/github/forks/mahamed-yasser/media-organizer-pro?style=for-the-badge)
 
 **Command-line tool that sorts media files into Type/Year/Month folders.**
 
@@ -59,7 +59,7 @@ Tests: `python -m pytest tests` (23 tests, including end-to-end runs of `main.py
 
 ```bash
 # Clone the repository
-git clone https://github.com/mahamedwow1-afk/media-organizer-pro.git
+git clone https://github.com/mahamed-yasser/media-organizer-pro.git
 cd media-organizer-pro
 
 # Install dependencies
@@ -221,7 +221,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **Mahamed Yasser**
 - Python Developer & Video Editor
 - Qalyubia, Egypt
-- [GitHub Profile](https://github.com/mahamedwow1-afk)
+- [GitHub Profile](https://github.com/mahamed-yasser)
 
 ---
 
@@ -235,6 +235,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
 
-Made with ❤️ by [Mahamed Yasser](https://github.com/mahamedwow1-afk)
+Made with ❤️ by [Mahamed Yasser](https://github.com/mahamed-yasser)
 
 </div>
+
