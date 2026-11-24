@@ -5,6 +5,7 @@ import logging
 from pathlib import Path
 from typing import Optional
 import sys
+import shutil
 
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent / 'src'))
@@ -16,6 +17,16 @@ from video_processor import VideoProcessor
 from audio_processor import AudioProcessor
 from image_processor import ImageProcessor
 from classifier import MediaClassifier
+
+def unique_destination(dest_dir: Path, name: str) -> Path:
+    """Return a path in dest_dir that does not exist yet (adds _1, _2 ... before the extension)."""
+    dest = dest_dir / name
+    stem, suffix, i = Path(name).stem, Path(name).suffix, 1
+    while dest.exists():
+        dest = dest_dir / f"{stem}_{i}{suffix}"
+        i += 1
+    return dest
+
 
 def parse_args():
     """Parse command line arguments."""
@@ -99,6 +110,7 @@ def main():
         'documents': 0,
         'errors': 0,
         'moved': 0,
+        'planned': 0,
         'skipped': 0
     }
 
@@ -110,9 +122,14 @@ def main():
 
     # Process files
     search_pattern = '**/*' if config.recursive else '*'
-    for file_path in source_path.glob(search_pattern):
+    for file_path in list(source_path.glob(search_pattern)):
         if not file_path.is_file():
             continue
+        try:
+            file_path.resolve().relative_to(target_path.resolve())
+            continue  # already inside the target folder
+        except ValueError:
+            pass
 
         stats['total_files'] += 1
 
@@ -148,8 +165,18 @@ def main():
                     logger.debug(f"Image: {file_path.name} - {info.resolution_str}")
 
             # Organize (in real implementation, this would move/copy files)
-            if not config.dry_run:
-                # TODO: Implement actual file moving logic
+            dest_dir = target_path / organizer.generate_folder_name(file_path, file_type)
+            dest = unique_destination(dest_dir, file_path.name)
+            if args.skip_existing and (dest_dir / file_path.name).exists():
+                stats['skipped'] += 1
+                continue
+            if config.dry_run:
+                logger.info(f"[dry-run] {file_path} -> {dest}")
+                stats['planned'] += 1
+            else:
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                shutil.move(str(file_path), str(dest))
+                logger.debug(f"Moved {file_path.name} -> {dest}")
                 stats['moved'] += 1
 
         except Exception as e:
@@ -166,6 +193,7 @@ def main():
         logger.info(f"Images:     {stats['images']}")
         logger.info(f"Audios:     {stats['audios']}")
         logger.info(f"Documents:  {stats['documents']}")
+        logger.info(f"Planned (dry-run): {stats['planned']}")
         logger.info(f"Moved:      {stats['moved']}")
         logger.info(f"Skipped:    {stats['skipped']}")
         logger.info(f"Errors:     {stats['errors']}")

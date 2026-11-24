@@ -35,28 +35,16 @@ Automatically organizes your video, image, and audio files into structured folde
 
 ## 📸 Demo
 
-```bash
-$ python main.py --source ./Downloads --target ./Organized --verbose
+![Real run on a sample folder](docs/screenshot.png)
 
-[INFO] Starting media organization...
-[INFO] Source: ./Downloads
-[INFO] Target: ./Organized
-[DEBUG] Video: vacation.mp4 - 1920x1080 @ 02:15:30
-[DEBUG] Audio: podcast.mp3 - 04:32 - High Quality
-[DEBUG] Image: photo.jpg - 4032x3024
-[INFO] ==================================================
-[INFO] ORGANIZATION STATISTICS
-[INFO] ==================================================
-[INFO] Total files scanned: 156
-[INFO] Videos:     45
-[INFO] Images:     78
-[INFO] Audios:     23
-[INFO] Moved:      146
-[INFO] Skipped:    3
-[INFO] Errors:     0
-[INFO] ==================================================
-[INFO] Organization completed successfully!
-```
+_Captured output of a real run on a small sample folder (3 images, 1 video, 1 audio file). Files were moved into `Type/Year/Month` folders._
+
+Preview first with `--dry-run`: it lists where each file would go and moves nothing.
+
+**What it does today:** sorts image, video, audio and document files by type and modified date, reads metadata (video/audio through FFmpeg, images through Pillow), never overwrites (a name clash gets `_1`, `_2`), skips files already in the target folder, leaves unknown file types where they are.
+**Not implemented:** the ML classification is a placeholder and does not change where files go.
+
+Tests: `python -m pytest tests` (23 tests, including end-to-end runs of `main.py` on temporary folders).
 
 ---
 

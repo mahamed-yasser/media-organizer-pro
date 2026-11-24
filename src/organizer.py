@@ -39,4 +39,4 @@ class MediaOrganizer:
         """Generate meaningful folder name for the file."""
         date = file_path.stat().st_mtime
         dt = datetime.fromtimestamp(date)
-        return dt.strftime(f"{ftype.value.title()}/{%Y}/%B")
+        return f"{ftype.value.title()}/{dt.strftime('%Y')}/{dt.strftime('%B')}"

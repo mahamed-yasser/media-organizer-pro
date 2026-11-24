@@ -233,8 +233,8 @@ class TestImageProcessor:
             assert info is not None
             assert info.width == 1920
             assert info.height == 1080
-            assert info.quality_label == "High Resolution"
-            assert info.megapixels == pytest.approx(20.736)
+            assert info.quality_label == "Low Resolution"  # 1920x1080 is about 2.07 MP
+            assert info.megapixels == pytest.approx(2.0736)
 
     @patch('PIL.Image.open')
     def test_probe_image_animated_gif(self, mock_open):
@@ -267,13 +267,13 @@ class TestClassifier:
         assert 'categories' in result
         assert 'confidence' in result
 
-    @patch('tensorflow')
-    def test_train_placeholder(self, mock_tf):
-        """Test training placeholder."""
+    def test_train_placeholder(self):
+        """Test training placeholder (TensorFlow is optional, so it is mocked)."""
         classifier = MediaClassifier()
-        with tempfile.TemporaryDirectory() as tmpdir:
-            result = classifier.train(Path(tmpdir))
-            assert result is True
+        with patch.dict(sys.modules, {'tensorflow': MagicMock(), 'tensorflow.keras': MagicMock()}):
+            with tempfile.TemporaryDirectory() as tmpdir:
+                result = classifier.train(Path(tmpdir))
+                assert result is True
 
 
 class TestIntegration:
@@ -284,8 +284,10 @@ class TestIntegration:
         organizer = MediaOrganizer()
         processor = VideoProcessor()
 
-        # Test classification
-        video_file = Path("sample.mp4")
+        # Test classification (folder naming reads the file's modified time, so use a real file)
+        tmp = tempfile.TemporaryDirectory()
+        video_file = Path(tmp.name) / "sample.mp4"
+        video_file.write_bytes(b"x")
         file_type = organizer.classify_file(video_file)
         assert file_type == FileType.VIDEO
 

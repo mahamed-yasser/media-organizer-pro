@@ -74,7 +74,7 @@ class VideoProcessor:
                 fps=float(video_stream.get('r_frame_rate', '0/1').split('/')[0]) /
                     float(video_stream.get('r_frame_rate', '0/1').split('/')[1]) if '/' in video_stream.get('r_frame_rate', '0/1') else 0,
                 file_size_bytes=int(format_data.get('size', 0)),
-                has_audio='audio' in data.get('streams', [])
+                has_audio=any(st.get('codec_type') == 'audio' for st in data.get('streams', []))
             )
 
         except subprocess.CalledProcessError as e:
